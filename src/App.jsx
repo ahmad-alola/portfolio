@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { STORAGE_LANG_KEY } from "./i18n";
+const base = import.meta.env.BASE_URL;
 
 function LangButton({ code, current, onClick, label }) {
   const active = current === code;
@@ -69,7 +70,7 @@ export default function App() {
         <section className="rounded-2xl bg-panel/60 border border-white/5 shadow-soft p-6 md:p-10">
           <div className="flex flex-col gap-4">
 
-            <img src="/profile.png" alt="Ahmad Abo-Alola" className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border border-white/15 shadow-xl ring-2 ring-accent/20 mb-2"/>
+            <img src={`${base}profile.png`} alt="Ahmad Abo-Alola" className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border border-white/15 shadow-xl ring-2 ring-accent/20 mb-2"/>
 
             <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
               {t("hero.title")}
@@ -84,8 +85,8 @@ export default function App() {
                 {t("hero.ctaPrimary")}
               </a>
               <a
-                href="/CV_Ahmad_Abo-Alola_Developpeur_IA.pdf"
-                download="CV_Ahmad_Abo-Alola_Developpeur_IA.pdf"
+                href={`${base}CV_Ahmad_Abo-Alola_Developpeur_IA.pdf`}
+                download
                 className="px-5 py-2 rounded-xl bg-panel2 border border-white/10 hover:bg-panel transition"
               >
                 {t("hero.ctaSecondary")}
