@@ -2,15 +2,162 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
+:root { color-scheme: dark; }
+
+/* Smooth anchor scroll + header offset */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
 }
 
-html, body, #root {
-  height: 100%;
-}
+html, body, #root { height: 100%; }
 
 body {
   @apply bg-bg text-text;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* ====== Layout layers ====== */
+/* خلي المحتوى فوق الخلفية */
+header, main, footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ====== Header ====== */
+.header-surface{
+  position: relative;
+  backdrop-filter: blur(18px);
+  background: rgba(0,0,0,0.38);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.header-surface::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  background: radial-gradient(circle at 20% 0%, rgba(56,189,248,0.14), transparent 45%);
+  opacity: 0.9;
+}
+
+/* nav link */
+.nav-link{
+  @apply text-muted hover:text-text transition focus:outline-none focus:ring-2 focus:ring-accent/30 rounded-md px-1;
+}
+.nav-link-active{
+  color: rgba(255,255,255,0.95);
+  position: relative;
+}
+.nav-link-active::after{
+  content:"";
+  position:absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(56,189,248,0.75);
+  box-shadow: 0 0 18px rgba(56,189,248,0.35);
+}
+
+/* ====== Cards ====== */
+.hero-card{
+  position: relative;
+  overflow: hidden;
+  @apply rounded-2xl bg-panel/55 border border-white/5 shadow-soft;
+}
+.card-soft{
+  position: relative;
+  overflow: hidden;
+  @apply rounded-2xl bg-panel/35 border border-white/5;
+}
+.card-soft::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+  background: radial-gradient(circle at 30% 10%, rgba(56,189,248,0.10), transparent 55%);
+  opacity: 0.7;
+}
+.card-pro{
+  position: relative;
+  overflow: hidden;
+  @apply rounded-2xl bg-panel/35 border border-white/5 p-5 transition;
+}
+.card-pro:hover{ border-color: rgba(255,255,255,0.10); }
+
+/* ===== A Neon Backdrop ONLY ===== */
+.a-backdrop{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.a-svg{
+  position: absolute;
+  width: min(86vmin, 820px);
+  height: min(86vmin, 820px);
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  filter: blur(0.1px);
+}
+
+@media (max-width: 640px){
+  .a-svg{ top: 52%; opacity: 0.14; }
+}
+
+.a-path{
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: a-draw 6s linear infinite;
+}
+
+.a-glow{
+  stroke: rgba(56,189,248,0.55);
+  stroke-width: 6;
+  filter: drop-shadow(0 0 14px rgba(56,189,248,0.28))
+          drop-shadow(0 0 40px rgba(56,189,248,0.16));
+  opacity: 0.75;
+}
+
+.a-core{
+  stroke: rgba(230,248,255,0.75);
+  stroke-width: 2.4;
+  opacity: 0.9;
+}
+
+/* النسخة الثانية متأخرة */
+.a-two .a-path{
+  animation-delay: 3s;
+  opacity: 0.95;
+}
+
+@keyframes a-draw{
+  0%   { stroke-dashoffset: 900; opacity: 0; }
+  10%  { opacity: 0.12; }
+  55%  { stroke-dashoffset: 0;   opacity: 0.22; }
+  75%  { stroke-dashoffset: 0;   opacity: 0.22; }
+  100% { stroke-dashoffset: -900; opacity: 0; }
+}
+
+.a-vignette{
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, transparent 35%, rgba(0,0,0,0.55) 78%, rgba(0,0,0,0.9) 100%);
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .a-path{ animation: none !important; stroke-dashoffset: 0; opacity: 0.12; }
 }
